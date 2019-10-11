@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 import Input from './Input';
+import Calculator from './Calculator';
 
 // App.js - Contains all the calculation logic and state of application
 class App extends Component {
@@ -8,11 +9,6 @@ class App extends Component {
   state = {
     input: ''
   };
-
-  // converts val which is currently a string, to a number
-  // toNum = val => {
-  //   return parseFloat(val);
-  // };
 
   //checks if val is a num
   // checkNum = val => {
@@ -25,13 +21,6 @@ class App extends Component {
   //   }
   // };
 
-  //this.addToInput(val) updates input state
-  // this.equals() doesn't update input
-  // onClick = val => {
-  //   this.addToInput(val);
-  //   // return this.equals();
-  // };
-
   // update input - Nothing is going from addToInput to onClick
   addToInput = val => {
     console.log('input: ' + this.state.input);
@@ -39,43 +28,36 @@ class App extends Component {
     return this.setState({ input: this.state.input + val });
   };
 
-  //equals() works, just not with clean()
-  equals = () => {
-    //sanitizes input before evaluating w/ math logic
-    const clean = this.state.input.replace(/x/g, '*').replace(/÷/g, '/');
-    return this.setState({
-      input: eval(clean)
-    });
-    // this.state.input = this.state.input.replace(/x/g, '*');
-    // this.state.input = this.state.input.replace(/÷/g, '/');
-    //   console.log('Sanitized string: ' + this.state.input);
-    //   // console.log('after clean(): ' + this.state.input);
-    //   return this.setState({ input: eval(this.state.input) });
+  // Sanitizes math operators
+  cleaner = input => {
+    input = this.state.input.replace(/x/g, '*').replace(/÷/g, '/');
+    return this.setState({ input: eval(input) });
   };
 
-  // Uses Replace & regex to replace with proper math operators
-  //figure out how to get equals to use clean() fxn so code is neater
-
-  // updateState = () => {
-  //   this.setState({ input: this.state.equals });
-  // };
+  // Evaluates math after operators are cleaned up
+  equals = (input, cleaner) => {
+    console.log('input is: ' + input);
+    console.log('input from app.js is: ' + input);
+    if (!this.state.input) {
+      return;
+    } else {
+      this.cleaner(input);
+    }
+  };
 
   percent = () => {
     const percentage = this.state.input / 100;
     this.setState({ input: percentage });
   };
 
+  toggle = () => {
+    const num = this.state.input * -1;
+    this.setState({ input: num });
+  };
+
   handleClear = () => {
     this.setState({ input: '' });
   };
-
-  // isOperator = val => {
-  //   if (isNaN(val)) {
-  //     console.log('Not a number');
-  //   } else {
-  //     return val;
-  //   }
-  // };
 
   render() {
     return (
@@ -84,12 +66,12 @@ class App extends Component {
 
         <div className="calculator-body">
           <Input input={this.state.input} />
+          {/* Trying put all <Buttons /> in a Calculator Component */}
+          {/* <Calculator input={this.state.input} /> */}
 
           <div className="row">
-            <Button dataAction="clear" handleClick={this.handleClear}>
-              AC
-            </Button>
-            <Button handleClick={this.addToInput}>+/-</Button>
+            <Button handleClick={this.handleClear}>AC</Button>
+            <Button handleClick={this.toggle}>+/-</Button>
             <Button handleClick={this.percent}>%</Button>
             <Button handleClick={this.addToInput}>÷</Button>
           </div>

@@ -6,47 +6,44 @@ import React from 'react';
 //need a this.setState somewhere
 
 const Input = props => {
-  //point of this fxn is to determine if it's a # or operator
-
-  // const isOperator = val => {
-  //   if (isNaN(val)) {
-  //     return NaN;
-  //   } else {
-  //     return val;
-  //   }
-  // };
-
-  // const newVal = isOperator({ input });
-
-  // console.log(isOperator({ input }));
-
-  // need to figure out how to convert input string to a number
-  // console.log(props);
-  // console.log(props.input);
-
-  // limits length of input that is displayed
-  // - doesn't actually modify length of state though, just what user sees
-  // - I think eval() return a #, so I had to convert it to a string
-  const display = props.input.toString();
-
-  // const removeZeros = str => {
-  //   if (str[str.length - 1] === '0') {
-  //     return str.replace(/0/g, '');
-  //   }
-  //   return str;
-  // };
-
-  // const noZeroDisplay = removeZeros(display);
-
-  console.log('display type is:  ' + typeof display);
-  const trim = str => {
-    if (str.length <= 8) {
+  const checkString = str => {
+    if (typeof string === undefined) {
+      return '';
+    } else if (typeof str === 'string') {
       return str;
+    } else if (typeof str === 'number') {
+      const newStr = str.toString();
+      if (newStr.length <= 8) {
+        return newStr;
+      }
+      return newStr.substring(0, 10);
     }
-    return str.substring(0, 10);
+    return '';
   };
 
-  return <div className="input">{trim(display)}</div>;
+  // console.log('display type is:  ' + typeof display);
+  // console.log('props.input: ' + props.input);
+
+  const trim = (str, checkString) => {
+    console.log('props.input is a ' + typeof str);
+    console.log('str is ' + str);
+    if (typeof str === undefined) {
+      return '';
+    }
+    if (typeof str === 'string') {
+      return str;
+    } else if (typeof str === 'number') {
+      const newStr = str.toString();
+      if (newStr.length <= 8) {
+        return newStr;
+      }
+      return newStr.substring(0, 10);
+    }
+    return '';
+    // this.checkString(str);
+  };
+
+  return <div className="input">{trim(props.input)}</div>;
 };
 
 export default Input;

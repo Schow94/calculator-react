@@ -101,5 +101,27 @@ alert(eval(str));
           - Need to figure out where to put this fxn, because it won't allow me
             to do 7 x 100. It removes the last 2 zeros from the display. Might
             need to create a this.state.result which is different from input
+          - Problem only seems to persist when doing 0.07 x 100 => 7.00000000
 13) Hitting = crashes the app if there's no input
   - I need more fxns checking inputs before they're passed into eval()
+  - Hitting = with no input returns undefined because input is ''
+      - App crashes because can't do toString() on ''
+  - Need logic to render nothing when props.input is ''
+
+14) Wrote a fxn to check if input is a string
+    - Need to figure out how to incorporate inside of trim() 
+    - Just took the code out put inside trim() and it didn't work
+    - Sorta fixed this. Pressing = with no input is okay, returns nothing
+        - Pressing = with an existing input breaks code
+        - Error - Can't replace on this.state.input for some reason
+
+15) Might need to clean up logic inside of equals() fxn
+    - Discovered that equals('9+') crashes our code since it ends in +
+
+16) Decided to clean code up, make more DRY and reusable and retire for the time
+    being. Will redo entire app with Redux
+    - Get cleaner() working inside of trim()
+17) Figure out how to split logic between components. Currently most logic inside
+    App.js component
+
+18)
